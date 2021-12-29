@@ -3,7 +3,7 @@ const { MessageEmbed } = require('discord.js');
 const fs = require('fs');
 
 this.name = 'help';
-this.description = 'Get help for commands'
+this.description = 'Wenn du Hilfe bei Befehlen brauchst.'
 
 module.exports = {
     name: this.name,
@@ -17,7 +17,7 @@ module.exports = {
         .addStringOption( option =>
             option.setName('command')
                 .setRequired(false)
-                .setDescription('The command you need help with, leave blank if you need general help')),
+                .setDescription('Der Befehl, mit dem du Hilfe brauchst.')),
     async execute(interaction){
         const actData = [];
         const cosData = [];
@@ -45,15 +45,15 @@ module.exports = {
 
             const helpEmbed = new MessageEmbed()
                 .setColor('#51de28')
-                .setTitle('These are my commands')
+                .setTitle('Meine Befehle')
                 .setAuthor('Rotom help', 'https://i.imgur.com/LAB3Ef9.png', 'https://www.youtube.com/watch?v=uyE80ebItlA')
                 .addFields(
-                    { name: 'Activity', value: actData.join('\n'), inline: true },
-                    { name: 'Cosmetic', value: cosData.join('\n'), inline: true },
+                    { name: 'Aktivität', value: actData.join('\n'), inline: true },
+                    { name: 'Kosmetisch', value: cosData.join('\n'), inline: true },
                     { name: 'Moderation', value: modData.join('\n'), inline: true },
-                    { name: 'Utility', value: utiData.join('\n'), inline: true },
+                    { name: 'Nützlichkeit', value: utiData.join('\n'), inline: true },
                 )
-                .setFooter('Use /help <command name> to get detailed information about a specific command')
+                .setFooter('Benutze /help <Name des Befehles> um genaue Informationen über einen Befehl zu erhalten.')
                 .setTimestamp()
 
             return interaction.reply({ embeds: [helpEmbed] });
