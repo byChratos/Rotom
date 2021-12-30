@@ -3,3 +3,4 @@ node_modules
 *.bat
 *.db
 images
+test.js
