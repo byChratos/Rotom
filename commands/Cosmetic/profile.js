@@ -1,6 +1,6 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
 const Canvas =  require('canvas');
-const { MessageAttachment } = require('discord.js');
+const { MessageAttachment, ReactionCollector } = require('discord.js');
 const pokemon = require('pokemon');
 const { Sequelize, QueryTypes } = require('sequelize');
 
@@ -357,10 +357,22 @@ module.exports = {
 					let url = `https://media.bisafans.de/6ff97ef//pokemon/artwork/${favorites[i]}.png`;
 					sprite = await Canvas.loadImage(url);
 
+					//Fix height by adding an offset
+					let fixH = 0;
+					if(sprite.width < sprite.height - 80){
+						fixH = 40;
+					}
+
+					//Fix width by adding an offset
+					let fixW = 0;
+					if(sprite.width - 80 > sprite.height){
+						fixW = 40;
+					}
+
 					if(localI<3){
-						context.drawImage(sprite, 75+(localI*225), 225, 150, 150);
+						context.drawImage(sprite, 75+(localI*225)+(fixH/2), 225+(fixW/2), 150-fixH, 150-fixW);
 					}else{
-						context.drawImage(sprite, 175+((localI-3)*225), 400, 150, 150);
+						context.drawImage(sprite, 175+((localI-3)*225)+(fixH/2), 400+(fixW/2), 150-fixH, 150-fixW);
 					}
 				}
 
@@ -395,6 +407,8 @@ module.exports = {
 
 					context.drawImage(sprite, 750, 225+(i*75)+3, 96, 42);
 				}
+
+				
 
 				//https://media.bisafans.de/6ff97ef//pokemon/artwork/001.png sprites
 				//https://media.bisafans.de/6ff97ef/typen/pflanze.png typen sprites
